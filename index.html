@@ -25,7 +25,17 @@
       <h2>Parent Check-In</h2>
       <p class="muted">First time? Enter the student's information below. Returning students can be found by last name.</p>
 
-      <form id="parentForm">
+            <div class="returning">
+        <h3>Returning Student</h3>
+        <p class="muted">Search by the student's last name.</p>
+        <div class="inline">
+          <input id="lookupLastName" placeholder="Student last name">
+          <button type="button" id="lookupFamily">Find students</button>
+        </div>
+        <div id="familyResults"></div>
+      </div>
+
+    <form id="parentForm">
         <label>Student name
           <input id="studentName" required>
         </label>
@@ -71,16 +81,6 @@
       </form>
       <div id="parentMessage" class="message hidden"></div>
 
-      <div class="returning">
-        <h3>Returning Student</h3>
-        <p class="muted">Search by the student's last name.</p>
-        <div class="inline">
-          <input id="lookupLastName" placeholder="Student last name">
-          <button type="button" id="lookupFamily">Find students</button>
-        </div>
-        <div id="familyResults"></div>
-      </div>
-    </div>
   </section>
 
   <section id="teacher" class="view">
