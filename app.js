@@ -1,4 +1,4 @@
-const CONFIG={startDate:"2026-08-19",googleAppsScriptUrl:""};
+const CONFIG={startDate:"2026-08-19",googleAppsScriptUrl:"https://script.google.com/macros/s/AKfycbw-lroPY4N_zB-k7_sB13IvWNoxuUGDt9dxF0IGec2Zhm_82uDcdZkAsmcMJKJ9OPpu/exec"};
 const KEY="iraBaptistCheckinV11";
 let state=load(); let activeGroup="PreK-K"; let attendanceChart=null;
 const $=id=>document.getElementById(id);
