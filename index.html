@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ira Baptist Student Check-In — V13</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f6f8;color:#1f2937}
+header{background:#fff;border-bottom:1px solid #dfe3e8;padding:18px 22px;display:flex;align-items:center;gap:16px}
+.logo{width:58px;height:58px;border-radius:12px;object-fit:contain;background:#fff}.brand h1{margin:0;font-size:22px}.brand p{margin:3px 0 0;color:#667085}
+nav{display:flex;gap:8px;flex-wrap:wrap;padding:12px 22px;background:#fff;border-bottom:1px solid #e5e7eb}
+.nav{border:0;background:#eef2f6;padding:10px 15px;border-radius:9px;cursor:pointer}.nav.active{background:#1f4e79;color:#fff}
+main{max-width:1100px;margin:22px auto;padding:0 18px}.view{display:none}.view.active{display:block}
+.card{background:#fff;border:1px solid #e0e5ea;border-radius:12px;padding:18px;margin-bottom:18px;box-shadow:0 2px 8px #00000008}
+h2,h3{margin-top:0}.muted{color:#667085}.hidden{display:none}.message{padding:10px 12px;border-radius:8px;background:#eef7ee;margin-top:12px}
+label{display:block;font-weight:600;margin:12px 0}input,select,textarea{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:7px;font:inherit}
+button{padding:9px 13px;border:1px solid #cbd5e1;border-radius:7px;background:#fff;cursor:pointer}.primary{background:#1f4e79;color:#fff;border-color:#1f4e79}
+.small{padding:7px 10px}.inline{display:flex;gap:8px;align-items:end}.inline>*{flex:1}.inline button{flex:0 0 auto}
+.two-column{display:grid;grid-template-columns:1fr 1fr;gap:18px}.teacher-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.teacher-tab.active{background:#1f4e79;color:#fff}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+.stat{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px;text-align:center}.stat b{display:block;font-size:24px}.stat span{color:#667085}
+table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #e5e7eb;text-align:left}th{background:#f8fafc}
+.returning{margin-top:22px;border-top:1px solid #e5e7eb;padding-top:18px}.returning-top{margin-bottom:18px}.compact-fields{gap:12px}
+.chart-wrap{height:280px;position:relative}
+.status{margin-left:auto;font-size:13px;color:#667085}
+@media(max-width:750px){.two-column{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.inline{flex-direction:column;align-items:stretch}.inline button{width:100%}}
+.staff-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #eee}.staff-row span{flex:1}.staff-row button{min-width:80px}</style>
+</head>
+<body>
+<header>
+  <img id="logo" class="logo" src="logo.png" alt="Ira Baptist logo">
+  <div class="brand"><h1>Ira Baptist Student Check-In</h1><p>Sunday student attendance and volunteer check-in</p></div>
+  <div id="connectionStatus" class="status">Local testing mode</div>
+</header>
+
+<nav>
+  <button class="nav active" data-view="parent">Parent Check-In</button>
+  <button class="nav" data-view="teacher">Teacher</button>
+  <button class="nav" data-view="admin">Admin</button>
+</nav>
+
+<main>
+<section id="parent" class="view active">
+  <div class="card returning-top">
+    <h2>Returning Student</h2>
+    <p class="muted">Search by the student's last name. Students appear here only after completing the new-student check-in once.</p>
+    <div class="inline">
+      <input id="lookupLastName" placeholder="Student last name">
+      <button type="button" id="lookupFamily">Find students</button>
+    </div>
+    <div id="familyResults"></div>
+  </div>
+
+  <div class="card">
+    <h2>Student Check-In</h2>
+    <p class="muted">New students complete the form once. After that, they appear under Returning Student.</p>
+    <form id="parentForm">
+      <label>Student first name<input id="studentFirstName" required></label>
+      <label>Student last name<input id="studentLastName" required></label>
+      <label>Parent/guardian first name<input id="parentFirstName" required></label>
+      <label>Parent/guardian last name<input id="parentLastName" required></label>
+      <label>Email<input id="email" type="email" required></label>
+      <label>Phone number<input id="phone" type="tel" required placeholder="(555) 555-5555"></label>
+      <label>Grade<select id="grade" required>
+        <option value="">Select grade</option><option>PreK</option><option>Kindergarten</option>
+        <option>1st grade</option><option>2nd grade</option><option>3rd grade</option><option>4th grade</option>
+        <option>5th grade</option><option>6th grade</option><option>7th grade</option><option>8th grade</option>
+        <option>9th grade</option><option>10th grade</option><option>11th grade</option><option>12th grade</option><option>Adult</option>
+      </select></label>
+      <label>Age<select id="age" required>
+        <option value="">Select age</option><option>Newborn</option>
+        <option>1 year old</option><option>2 years old</option><option>3 years old</option><option>4 years old</option>
+        <option>5 years old</option><option>6 years old</option><option>7 years old</option><option>8 years old</option>
+        <option>9 years old</option><option>10 years old</option><option>11 years old</option><option>12 years old</option>
+        <option>13 years old</option><option>14 years old</option><option>15 years old</option><option>16 years old</option>
+        <option>17 years old</option><option>18 years old</option><option>19 years old</option>
+      </select></label>
+      <label>Allergies (optional)<textarea id="allergies" rows="2"></textarea></label>
+      <label><input id="photoPermission" type="checkbox" style="width:auto"> Photo permission</label>
+      <label><input id="emergencyPermission" type="checkbox" style="width:auto"> Emergency permission</label>
+      <button class="primary" type="submit">Check in student</button>
+    </form>
+    <div id="parentMessage" class="message hidden"></div>
+
+
+  </div>
+</section>
+
+<section id="teacher" class="view">
+  <div class="teacher-tabs">
+    <button type="button" class="teacher-tab active" data-group="PreK-K">PreK-K</button>
+    <button type="button" class="teacher-tab" data-group="1st-2nd">1st &amp; 2nd</button>
+    <button type="button" class="teacher-tab" data-group="3rd">3rd</button>
+    <button type="button" class="teacher-tab" data-group="4th">4th</button>
+    <button type="button" class="teacher-tab" data-group="5th">5th</button>
+    <button type="button" class="teacher-tab" data-group="Youth">Youth (6th-12th)</button>
+    <button type="button" class="teacher-tab" data-group="Adults">Adults Class</button>
+  </div>
+  <div class="card">
+    <div class="section-heading"><h3 id="teacherGroupTitle">PreK-K</h3><p id="teacherNames" class="muted"></p></div>
+    <label>Week<select id="teacherDate"></select></label>
+    <div id="teacherTable"></div>
+  </div>
+  <div class="two-column">
+    <div class="card">
+      <h3>Add Student to Roster</h3>
+      <p class="muted">First name, last name, and grade are required. Permissions are not teacher-editable.</p>
+      <form id="rosterForm">
+        <label>Student first name<input id="rosterFirstName" required></label>
+        <label>Student last name<input id="rosterLastName" required></label>
+        <label>Grade<select id="rosterGrade" required>
+          <option value="">Select grade</option><option>PreK</option><option>Kindergarten</option><option>1st grade</option><option>2nd grade</option><option>3rd grade</option><option>4th grade</option><option>5th grade</option><option>6th grade</option><option>7th grade</option><option>8th grade</option><option>9th grade</option><option>10th grade</option><option>11th grade</option><option>12th grade</option><option>Adult</option>
+        </select></label>
+        <button class="primary" type="submit">Add to roster</button>
+      </form>
+      <div id="rosterMessage" class="message hidden"></div>
+    </div>
+    <div class="card">
+      <h3>Teachers for This Group</h3>
+      <form id="teacherForm">
+        <div class="two-column compact-fields">
+          <label>First name<input id="teacherFirstName" required></label>
+          <label>Last name<input id="teacherLastName" required></label>
+        </div>
+        <button type="submit">Add teacher</button>
+      </form>
+      <div id="teacherList"></div>
+    </div>
+  </div>
+</section>
+
+<section id="admin" class="view">
+  <div class="card">
+    <label>Week<select id="adminDate"></select></label>
+    <div class="stats">
+      <div class="stat"><b id="checkedInCount">0</b><span>Checked in</span></div>
+      <div class="stat"><b id="presentCount">0</b><span>Present</span></div>
+      <div class="stat"><b id="attendanceRate">0%</b><span>Attendance rate</span></div>
+    </div>
+    <h3 id="adminDateTitle"></h3><div id="adminTable"></div>
+  </div>
+  <div class="card">
+    <h3>Weekly Attendance</h3>
+    <p class="muted">Weekly totals for students, teachers, and everyone serving or attending.</p>
+    <div class="stats">
+      <div class="stat"><b id="weeklyStudentTotal">0</b><span>Student attendance</span></div>
+      <div class="stat"><b id="weeklyTeacherTotal">0</b><span>Teacher attendance</span></div>
+      <div class="stat"><b id="weeklyTotal">0</b><span>Total attendance</span></div>
+    </div>
+    <div class="chart-wrap"><canvas id="attendanceChart"></canvas></div>
+  </div>
+  <div class="card">
+    <h3>Volunteers Serving</h3>
+    <p class="muted">Add a volunteer once. They automatically appear each future week. Mark Serving and choose Kitchen, PreK-K, 1st-2nd, 3rd, 4th, 5th, Youth, or Other.</p>
+    <form id="volunteerForm">
+      <div class="two-column compact-fields">
+        <label>First name<input id="volunteerFirstName" required></label>
+        <label>Last name<input id="volunteerLastName" required></label>
+      </div>
+      <button class="primary" type="submit">Add volunteer</button>
+    </form>
+    <div id="volunteerMessage" class="message hidden"></div><div id="volunteerTable"></div>
+  </div>
+  <div class="card">
+    <h3>Daily Notes</h3>
+    <textarea id="dailyNotes" rows="6" placeholder="Notes for this church day..."></textarea>
+    <button type="button" class="primary small" id="saveNotes">Save Notes</button>
+    <div id="notesMessage" class="message hidden"></div>
+  </div>
+  <div class="card"><button type="button" id="deleteWeek">Remove this week from the calendar</button></div>
+</section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
