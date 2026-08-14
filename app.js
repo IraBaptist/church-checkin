@@ -695,8 +695,13 @@ $("parentForm").addEventListener("submit",async e=>{
   // A student is added to Returning Student only here, after a successful new-student check-in.
   const studentId=id();
   const rec={
-    id:id(),studentId,studentName,parentName,parentFirst,parentLast,email,phone,age,grade,
-    allergies,photoPermission,emergencyPermission,group:teacherGroup(grade),date:d,checkedInBy:"Parent/Guardian",
+    id:id(),studentId,
+    studentFirstName:first,studentLastName:last,firstName:first,lastName:last,studentName,
+    parentFirstName:parentFirst,parentLastName:parentLast,parentFirst,parentLast,parentName,
+    email,phone,age,grade,allergies,foodAllergies:allergies,
+    photoPermission,photoConsent:photoPermission,
+    emergencyPermission,transportConsent:emergencyPermission,
+    group:teacherGroup(grade),date:d,checkedInBy:"Parent/Guardian",
     checkedInAt:new Date().toISOString(),present:false
   };
 
