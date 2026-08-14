@@ -135,17 +135,25 @@ async function sync(payload){
   }
 }
 
+function textValue(v){
+  return v===null||v===undefined ? "" : String(v);
+}
 function normalizeRemoteStudent(s){
+  s=s||{};
+  const studentFirst=textValue(s.firstName||s.studentFirstName);
+  const studentLast=textValue(s.lastName||s.studentLastName);
+  const parentFirst=textValue(s.parentFirst||s.parentFirstName);
+  const parentLast=textValue(s.parentLast||s.parentLastName);
   return {
-    studentId:s.studentId||"",
-    studentName:s.studentName||`${s.studentFirstName||""} ${s.studentLastName||""}`.trim(),
-    firstName:s.firstName||s.studentFirstName||"",
-    lastName:s.lastName||s.studentLastName||"",
-    parentName:s.parentName||`${s.parentFirstName||""} ${s.parentLastName||""}`.trim(),
-    parentFirst:s.parentFirst||s.parentFirstName||"",
-    parentLast:s.parentLast||s.parentLastName||"",
-    email:s.email||"",phone:s.phone||"",age:s.age||"",grade:s.grade||"",group:s.group||"",
-    allergies:s.allergies??s.foodAllergies??"",
+    studentId:textValue(s.studentId),
+    studentName:textValue(s.studentName)||`${studentFirst} ${studentLast}`.trim(),
+    firstName:studentFirst,
+    lastName:studentLast,
+    parentName:textValue(s.parentName)||`${parentFirst} ${parentLast}`.trim(),
+    parentFirst,
+    parentLast,
+    email:textValue(s.email),phone:textValue(s.phone),age:textValue(s.age),grade:textValue(s.grade),group:textValue(s.group),
+    allergies:textValue(s.allergies??s.foodAllergies),
     photoPermission:s.photoPermission??s.photoConsent??false,
     emergencyPermission:s.emergencyPermission??s.transportConsent??false
   };
