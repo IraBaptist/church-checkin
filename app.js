@@ -10,6 +10,8 @@ let returningLookup=new Map();
 
 const KEY="iraBaptistCheckinV13";
 let state=load(),activeGroup="PreK-K",attendanceChart=null;
+let sharedLoadedAt=0;
+const SHARED_REFRESH_MS=30000;
 const $=id=>document.getElementById(id);
 
 function defaults(){
@@ -203,10 +205,15 @@ async function loadSharedState(token){
   const data=await apiPost({action:"bootstrap",token});
   if(!data.ok)throw new Error(data.error||"Unable to load shared data.");
   applyBootstrap(data.state);
+  sharedLoadedAt=Date.now();
   populateDates();
   renderTeacher();
   renderAdmin();
   return data;
+}
+
+function sharedStateIsFresh(){
+  return sharedLoadedAt && (Date.now()-sharedLoadedAt)<SHARED_REFRESH_MS;
 }
 async function ensureAccess(view){
   if(view!=="teacher"&&view!=="admin")return true;
@@ -214,6 +221,9 @@ async function ensureAccess(view){
   let token=sessionStorage.getItem(key)||"";
   if(view==="teacher"&&!token)token=sessionStorage.getItem(SESSION_KEYS.admin)||"";
   if(token){
+    // Page switching should be immediate after a successful login.
+    // Reuse the shared state we already loaded instead of waiting on Apps Script every click.
+    if(sharedStateIsFresh()) return true;
     try{await loadSharedState(token);return true}catch(e){sessionStorage.removeItem(key)}
   }
   const label=view==="admin"?"Admin":"Teacher";
@@ -704,7 +714,17 @@ $("parentForm").addEventListener("submit",async e=>{
   e.target.reset();
   formatPhone($("phone"));
 
-  await sync({action:"checkin",record:rec});
+  try{
+    const result=await sync({action:"checkin",record:rec});
+    sharedLoadedAt=0;
+    if(result && result.studentSaved===false){
+      throw new Error("The weekly check-in saved, but the permanent student profile did not save.");
+    }
+  }catch(err){
+    $("parentMessage").textContent=`Check-in could not fully save: ${err.message||err}`;
+    $("parentMessage").classList.remove("hidden");
+    console.error(err);
+  }
 });
 
 async function refreshReturningResults(){
