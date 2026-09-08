@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ira Baptist Student Check-In — V13</title>
+<title>Ira Baptist Student Check-In — V14 TEST</title>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f6f8;color:#1f2937}
 header{background:#fff;border-bottom:1px solid #dfe3e8;padding:18px 22px;display:flex;align-items:center;gap:16px}
@@ -25,39 +25,94 @@ table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px s
 .status{margin-left:auto;font-size:13px;color:#667085}
 @media(max-width:750px){.two-column{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.inline{flex-direction:column;align-items:stretch}.inline button{width:100%}}
 .staff-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #eee}.staff-row span{flex:1}.staff-row button{min-width:80px}
-.attendance-btn{min-width:92px;font-weight:700;color:#fff;border-width:1px}.attendance-present{background:#15803d;border-color:#15803d}.attendance-present:hover{background:#166534;border-color:#166534}.attendance-absent{background:#dc2626;border-color:#dc2626}.attendance-absent:hover{background:#b91c1c;border-color:#b91c1c}.teacher-attendance-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #eee}.record-actions{display:flex;gap:6px;white-space:nowrap}.modal-backdrop{position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;padding:18px;z-index:1000}.modal-backdrop.hidden{display:none}.modal-card{background:#fff;border-radius:12px;max-width:720px;width:100%;max-height:92vh;overflow:auto;padding:20px;box-shadow:0 16px 50px #0005}.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}</style>
+.attendance-btn{min-width:92px;font-weight:700;color:#fff;border-width:1px}.attendance-present{background:#15803d;border-color:#15803d}.attendance-present:hover{background:#166534;border-color:#166534}.attendance-absent{background:#dc2626;border-color:#dc2626}.attendance-absent:hover{background:#b91c1c;border-color:#b91c1c}.teacher-attendance-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid #eee}.record-actions{display:flex;gap:6px;white-space:nowrap}.modal-backdrop{position:fixed;inset:0;background:#0008;display:flex;align-items:center;justify-content:center;padding:18px;z-index:1000}.modal-backdrop.hidden{display:none}.modal-card{background:#fff;border-radius:12px;max-width:720px;width:100%;max-height:92vh;overflow:auto;padding:20px;box-shadow:0 16px 50px #0005}.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+:root{--ira-orange:#ff6a00;--ira-black:#171717}
+body{background:#f7f7f7;color:#171717}
+header{border-bottom:4px solid var(--ira-orange)}
+.nav.active,.teacher-tab.active,.primary{background:var(--ira-orange);border-color:var(--ira-orange);color:#171717;font-weight:700}
+.nav:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #171717;outline-offset:2px}
+button:disabled{opacity:.55;cursor:not-allowed}
+nav{justify-content:flex-end}
+nav .nav:first-child{margin-right:auto}
+.parent-home{text-align:center;padding:20px 0 30px}
+.parent-home h2{font-size:clamp(25px,4vw,36px);margin-bottom:8px}
+.parent-actions{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:850px;margin:28px auto}
+.parent-action{min-height:170px;border:0;border-radius:16px;padding:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
+.parent-action strong{font-size:clamp(19px,2.6vw,25px);line-height:1.25}
+.parent-action span{font-size:15px;line-height:1.5}
+.register-action{background:var(--ira-orange);color:#171717}
+.checkin-action{background:var(--ira-black);color:#fff}
+#parentSuccessPanel.hidden{display:none!important}
+#parentWorkflow[hidden],#parentHome[hidden],#returningPanel[hidden],#registrationPanel[hidden]{display:none!important}
+#parentBack{margin-bottom:18px}
+.allergy-alert{display:block;background:#fff3e6;border-left:4px solid #c2410c;padding:7px 10px;border-radius:4px;color:#7c2d12;font-weight:700;margin-top:5px}
+.teacher-person{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 0;border-bottom:1px solid #e5e7eb}
+.teacher-person .person-name{flex:1;min-width:150px}
+.teacher-person .role-label{font-size:12px;color:#555}
+.teacher-person .record-actions{flex-wrap:wrap}
+@media(max-width:650px){.parent-actions{grid-template-columns:1fr}.parent-action{min-height:140px}nav{padding:8px 12px}nav .nav{padding:8px 10px}main{margin:12px auto}.card{padding:14px}}
+
+.success-panel{background:#ecfdf3;border:2px solid #15803d;border-radius:14px;padding:20px;margin:16px 0}.success-panel h3{margin:0 0 8px}.success-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.lookup-loading{display:flex;gap:10px;align-items:center;padding:16px}.mini-spinner{width:22px;height:22px;border:3px solid #ddd;border-top-color:var(--ira-orange);border-radius:50%;animation:v14Spin .8s linear infinite}
+.floating-save{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:900;background:var(--ira-orange);border:3px solid #171717;border-radius:12px;padding:15px 28px;font-size:17px;font-weight:900;box-shadow:0 10px 28px #0005;min-width:min(92vw,420px)}.floating-save.hidden{display:none}.pending-dot{display:inline-block;width:11px;height:11px;border-radius:50%;background:#b91c1c;margin-right:8px}.pending-warning{position:fixed;left:50%;transform:translateX(-50%);bottom:74px;z-index:899;background:#fff7ed;border:2px solid #f59e0b;border-radius:10px;padding:9px 14px;font-weight:800;box-shadow:0 5px 18px #0002;max-width:92vw}.pending-warning.hidden{display:none}
+.admin-toolbar{display:grid;grid-template-columns:minmax(230px,1fr) 2fr;gap:18px;align-items:end}.compact-stats{margin:0}.admin-filters{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.admin-filters>*{min-width:170px;flex:1}.section-heading-row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.export-actions{display:flex;gap:8px;flex-wrap:wrap}.week-actions{display:flex;gap:8px;flex-wrap:wrap}.week-actions input{max-width:240px}.sticky-name-col{position:sticky;left:0;min-width:190px;width:190px;background:#fff;z-index:4}.sticky-actions-col{position:sticky;left:190px;min-width:235px;width:235px;background:#fff;z-index:3}.admin-student-table th.sticky-actions-col,.admin-student-table th.sticky-name-col{background:#f8fafc;z-index:5}.adult-row{display:grid;grid-template-columns:minmax(210px,1.5fr) minmax(130px,.8fr) minmax(170px,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #eee}.adult-row .record-actions{flex-wrap:wrap}.pending-change{box-shadow:inset 0 0 0 2px #f59e0b}.sticky-modal-actions{position:sticky;bottom:-20px;background:#fff;padding:12px 0 4px;border-top:1px solid #eee}.kitchen-allergy{border-left:5px solid #b91c1c;background:#fff7ed;padding:10px;margin:8px 0;border-radius:6px}.kitchen-ok{padding:10px;margin:8px 0;border-bottom:1px solid #eee}.print-only{display:none}
+@media(max-width:800px){.admin-toolbar{grid-template-columns:1fr}.section-heading-row{flex-direction:column}.adult-row{grid-template-columns:1fr}.sticky-name-col{left:0}.sticky-actions-col{left:175px}.sticky-name-col{min-width:175px;width:175px}.sticky-actions-col{min-width:225px;width:225px}.admin-student-table{min-width:1425px}.floating-save{right:12px;bottom:12px}.export-actions button{width:100%}}
+@media print{nav,#connectionStatus,.export-actions,.week-actions,.floating-save,button{display:none!important}main{max-width:none;margin:0;padding:0}.card{box-shadow:none;border:0}.view{display:none!important}.view.print-target{display:block!important}.print-only{display:block}.kitchen-allergy,.kitchen-ok{break-inside:avoid}}
+
+#parentSuccessPanel .success-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px}
+#parentSuccessPanel .success-actions .primary{background:var(--ira-orange);border-color:var(--ira-orange);color:#171717;font-weight:700;min-height:48px}
+#parentSuccessPanel .success-name{font-size:23px;margin:12px 0}
+.kitchen-allergy-group{border:1px solid #f0c59c;border-left:5px solid #c2410c;background:#fff8f1;border-radius:9px;padding:12px 15px;margin:10px 0;break-inside:avoid}
+.kitchen-allergy-name{font-size:17px;line-height:1.3;color:#9a3412;margin:0 0 7px;font-weight:800}
+.kitchen-allergy-group ul{margin:0;padding-left:21px}
+.kitchen-allergy-group li{padding:4px 0;line-height:1.4}
+@media print{.kitchen-allergy-group{background:#fff;border-color:#aaa}.kitchen-allergy-name{color:#111}}
+</style>
 </head>
 <body>
 <header>
   <img id="logo" class="logo" src="logo.png" alt="Ira Baptist logo">
-  <div class="brand"><h1>Ira Baptist Student Check-In</h1><p>Sunday student attendance and volunteer check-in</p></div>
+  <div class="brand"><h1>Ira Baptist Student Check-In</h1><p>Wednesday student attendance and volunteer check-in</p></div>
   <div id="connectionStatus" class="status">Local testing mode</div>
 </header>
 
 <nav>
-  <button class="nav active" data-view="parent">Parent Check-In</button>
+  <button class="nav active" data-view="parent">Home</button>
   <button class="nav" data-view="teacher">Teacher</button>
   <button class="nav" data-view="admin">Admin</button>
+  <button class="nav" data-view="kitchen">Kitchen</button>
 </nav>
 
 <main>
 <section id="parent" class="view active">
+  <div id="parentHome" class="parent-home">
+    <h2>Welcome to Ira Baptist</h2>
+    <p class="muted">What would you like to do today?</p>
+    <div class="parent-actions">
+      <button type="button" class="parent-action register-action" data-parent-path="register"><strong>Register Student for the First Time</strong><span>Complete a new student registration.</span></button>
+      <button type="button" class="parent-action checkin-action" data-parent-path="checkin"><strong>Check In a Student That Has Already Been Registered</strong><span>Use this for a returning registered student.</span></button>
+    </div>
+  </div>
+  <div id="parentSuccessPanel" class="success-panel hidden"></div>
+  <div id="parentWorkflow" hidden>
+    <button type="button" class="small" id="parentBack">← Back to Home</button>
+    <h2 id="parentWorkflowTitle"></h2>
   <div class="card">
     <label>Service week<select id="parentDate"></select></label>
     <p class="muted">Check-in resets for each service week. A returning student's saved information stays on file.</p>
   </div>
-  <div class="card returning-top">
+  <div class="card returning-top" id="returningPanel">
     <h2>Returning Student</h2>
-    <p class="muted">Search by the student's last name. Students appear here only after completing the new-student check-in once.</p>
+    <p class="muted">Search by all or part of the student's last name. Students appear here only after completing parent registration.</p>
     <div class="inline">
-      <input id="lookupLastName" placeholder="Student last name">
+      <input id="lookupLastName" placeholder="Student last name or beginning letters">
       <button type="button" id="lookupFamily">Find students</button>
     </div>
     <div id="familyResults"></div>
   </div>
 
-  <div class="card">
-    <h2>Student Check-In</h2>
+  <div class="card" id="registrationPanel">
+    <h2>Register a Student for the First Time</h2>
     <p class="muted">New students complete the form once. After that, they appear under Returning Student.</p>
     <form id="parentForm">
       <label>Student first name<input id="studentFirstName" required></label>
@@ -71,7 +126,7 @@ table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px s
       <label>Allergies (optional)<textarea id="allergies" rows="2"></textarea></label>
       <label><input id="photoPermission" type="checkbox" style="width:auto"> I give permission for Ira Baptist Church to use photographs or videos of my student for church-related purposes.</label>
       <label><input id="emergencyPermission" type="checkbox" style="width:auto"> I give permission for Ira Baptist Church to transport my student in an emergency when necessary for their safety and care.</label>
-      <button class="primary" type="submit">Check in student</button>
+      <button class="primary" type="submit">Register and Check In Student</button>
     </form>
     <div id="parentMessage" class="message hidden"></div>
 
@@ -92,7 +147,7 @@ table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px s
   <div class="card">
     <div class="section-heading"><h3 id="teacherGroupTitle">PreK-K</h3><p id="teacherNames" class="muted"></p></div>
     <label>Week<select id="teacherDate"></select></label>
-    <div id="teacherTable"></div>
+    <div id="teacherTable"></div><div id="teacherStudentMessage" class="message hidden" role="status"></div>
   </div>
   <div class="two-column">
     <div class="card">
@@ -104,6 +159,7 @@ table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px s
         <label>Grade<select id="rosterGrade" required>
           <option value="">Select grade</option><option>PreK</option><option>Kindergarten</option><option>1st grade</option><option>2nd grade</option><option>3rd grade</option><option>4th grade</option><option>5th grade</option><option>6th grade</option><option>7th grade</option><option>8th grade</option><option>9th grade</option><option>10th grade</option><option>11th grade</option><option>12th grade</option><option>Adult</option>
         </select></label>
+        <label>Food allergies (optional)<textarea id="rosterAllergies" rows="2"></textarea></label>
         <button class="primary" type="submit">Add to roster</button>
       </form>
       <div id="rosterMessage" class="message hidden"></div>
@@ -115,65 +171,101 @@ table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px s
           <label>First name<input id="teacherFirstName" required></label>
           <label>Last name<input id="teacherLastName" required></label>
         </div>
+        <label>Role<select id="teacherRole"><option value="Main Classroom Teacher">Main Classroom Teacher</option><option value="Classroom Helper">Classroom Helper</option></select></label>
+        <label>Food allergies (optional)<textarea id="teacherAllergies" rows="2"></textarea></label>
         <label>Assigned class<select id="teacherClass" required>
           <option value="" selected disabled>Select class</option>
           <option value="PreK-K">PreK-K</option><option value="1st-2nd">1st &amp; 2nd</option><option value="3rd">3rd</option><option value="4th">4th</option><option value="5th">5th</option><option value="Youth">Youth (6th-12th)</option><option value="Adults">Adults Class</option>
         </select></label>
         <button type="submit">Add teacher</button>
       </form>
-      <div id="teacherList"></div>
+      <div id="teacherList"></div><div id="teacherManageMessage" class="message hidden" role="status"></div>
     </div>
   </div>
 </section>
 
 <section id="admin" class="view">
-  <div class="card">
-    <label>Week<select id="adminDate"></select></label>
-    <div class="stats">
-      <div class="stat"><b id="checkedInCount">0</b><span>Checked in</span></div>
-      <div class="stat"><b id="presentCount">0</b><span>Present</span></div>
-      <div class="stat"><b id="attendanceRate">0%</b><span>Attendance rate</span></div>
+  <div class="card admin-overview-card">
+    <div class="admin-toolbar">
+      <label>Week<select id="adminDate"></select></label>
+      <div class="stats compact-stats">
+        <div class="stat"><b id="checkedInCount">0</b><span>Checked in</span></div>
+        <div class="stat"><b id="presentCount">0</b><span>Students present</span></div>
+        <div class="stat"><b id="attendanceRate">0%</b><span>Attendance rate</span></div>
+      </div>
     </div>
     <h3 id="adminDateTitle"></h3>
-    <div class="inline" style="margin:12px 0">
-      <label>Sort
-        <select id="adminSort">
-          <option value="class-last" selected>Class, then last name</option>
-          <option value="last-class">Last name, then class</option>
-        </select>
-      </label>
-    </div>
-    <div id="adminTable"></div>
   </div>
+
   <div class="card">
     <h3>Weekly Attendance</h3>
-    <p class="muted">Weekly totals for students, teachers, and everyone serving or attending.</p>
+    <p class="muted">Exact attendance for the selected service date. Adults are de-duplicated across teacher and volunteer roles.</p>
     <div class="stats">
-      <div class="stat"><b id="weeklyStudentTotal">0</b><span>Student attendance</span></div>
-      <div class="stat"><b id="weeklyTeacherTotal">0</b><span>Teacher attendance</span></div>
+      <div class="stat"><b id="weeklyStudentTotal">0</b><span>Students</span></div>
+      <div class="stat"><b id="weeklyTeacherTotal">0</b><span>Teachers</span></div>
+      <div class="stat"><b id="weeklyVolunteerTotal">0</b><span>Volunteers</span></div>
+      <div class="stat"><b id="weeklyAdultTotal">0</b><span>Adults (unique)</span></div>
       <div class="stat"><b id="weeklyTotal">0</b><span>Total attendance</span></div>
     </div>
     <div class="chart-wrap"><canvas id="attendanceChart"></canvas></div>
   </div>
+
   <div class="card">
-    <h3>Volunteers Serving</h3>
-    <p class="muted">Add a volunteer once. They automatically appear each future week. Mark Serving and choose Kitchen, PreK-K, 1st-2nd, 3rd, 4th, 5th, Youth, or Other.</p>
+    <h3>Adult Teachers</h3>
+    <p class="muted">Manage teacher information, attendance, merges, and removals. Teacher merges are Admin-only.</p>
+    <div class="admin-filters"><input id="teacherSearch" placeholder="Search teachers"><select id="teacherSort"><option value="class">Class, then name</option><option value="name">Name</option><option value="role">Role</option><option value="allergy">Allergies first</option></select></div>
+    <div id="adminTeacherManagement"></div>
+    <div id="adminTeacherMessage" class="message hidden"></div>
+  </div>
+
+  <div class="card">
+    <h3>Adults Serving</h3>
+    <p class="muted">Manage volunteers and this week's Present/Serving status. Permanent profile changes use Edit; weekly changes are batched.</p>
     <form id="volunteerForm">
-      <div class="two-column compact-fields">
-        <label>First name<input id="volunteerFirstName" required></label>
-        <label>Last name<input id="volunteerLastName" required></label>
-      </div>
+      <div class="two-column compact-fields"><label>First name<input id="volunteerFirstName" required></label><label>Last name<input id="volunteerLastName" required></label></div>
+      <label>Food allergies (optional)<textarea id="volunteerAllergies" rows="2"></textarea></label>
       <button class="primary" type="submit">Add volunteer</button>
     </form>
+    <div class="admin-filters"><input id="volunteerSearch" placeholder="Search volunteers"><select id="volunteerSort"><option value="name">Name</option><option value="serving">Serving first</option><option value="present">Present first</option><option value="allergy">Allergies first</option></select></div>
     <div id="volunteerMessage" class="message hidden"></div><div id="volunteerTable"></div>
   </div>
+
   <div class="card">
-    <h3>Daily Notes</h3>
-    <textarea id="dailyNotes" rows="6" placeholder="Notes for this church day..."></textarea>
-    <button type="button" class="primary small" id="saveNotes">Save Notes</button>
-    <div id="notesMessage" class="message hidden"></div>
+    <div class="section-heading-row"><div><h3>Students</h3><p class="muted">Student names and Admin actions stay visible. Roster removal is Admin-only and preserves registration and historical attendance.</p></div><div class="export-actions"><button type="button" id="printStudentInfo">Print / Save Filtered Report</button><button type="button" id="downloadStudentDoc">Download Filtered Word Report</button></div></div>
+    <div class="admin-filters">
+      <input id="studentSearch" placeholder="Search student or parent">
+      <select id="adminClassFilter"><option value="">All classes</option><option>PreK-K</option><option>1st-2nd</option><option>3rd</option><option>4th</option><option>5th</option><option>Youth</option><option>Adults</option></select>
+      <select id="adminStatusFilter"><option value="">All statuses</option><option value="checked">Checked in</option><option value="notchecked">Not checked in</option><option value="present">Present</option><option value="absent">Absent</option><option value="allergy">Has allergy</option><option value="permission">Permission issue</option></select>
+      <select id="adminSort"><option value="class-last" selected>Class, then last name</option><option value="last-class">Last name, then class</option><option value="first">First name</option><option value="checked">Checked in first</option><option value="present">Present first</option><option value="allergy">Allergies first</option></select>
+    </div>
+    <div id="adminStudentMessage" class="message hidden"></div><div id="adminTable"></div>
   </div>
-  <div class="card"><button type="button" id="deleteWeek">Remove this week from the calendar</button></div>
+
+  <div class="card">
+    <h3>Daily Notes</h3><textarea id="dailyNotes" rows="6" placeholder="Notes for this church day..."></textarea><button type="button" class="primary small" id="saveNotes">Save Notes</button><div id="notesMessage" class="message hidden"></div>
+  </div>
+
+  <div class="card">
+    <h3>Week Management</h3><p class="muted">Add a special service date, change a selected week date while preserving linked history, or remove a week from the calendar without deleting attendance.</p>
+    <div class="week-actions"><input id="weekDateInput" type="date"><button type="button" id="addWeekButton">Add Week</button><button type="button" id="editWeekButton">Change Selected Week to This Date</button><button type="button" id="deleteWeek" class="danger">Remove Selected Week from Calendar</button></div>
+    <div id="weekMessage" class="message hidden"></div>
+  </div>
+</section>
+
+<section id="kitchen" class="view">
+  <div class="card"><h3>Meal Planning — Average Attendance</h3>
+  <p id="kitchenAveragePeriod" class="muted">Loading attendance history…</p>
+  <div class="stats">
+    <div class="stat"><b id="kitchenAverageKids">—</b><span>Average kids</span></div>
+    <div class="stat"><b id="kitchenAverageAdults">—</b><span>Average adults</span></div>
+    <div class="stat"><b id="kitchenAverageTotal">—</b><span>Average total</span></div>
+  </div>
+  <p class="muted" style="margin-bottom:0">Averages are historical planning references, not meal quantities. Account for the current week's expected attendance and dietary needs.</p>
+</div>
+<div class="card"><div class="section-heading-row"><div><h2>Kitchen</h2><p class="muted">Read-only student and adult allergy information, plus this week's Kitchen volunteer assignments.</p></div><button type="button" id="printKitchen">Print Kitchen Sheet</button></div><label>Week<select id="kitchenDate"></select></label><div class="stats"><div class="stat"><b id="kitchenCheckedIn">0</b><span>Students checked in</span></div><div class="stat"><b id="kitchenRegistered">0</b><span>Registered students</span></div><div class="stat"><b id="kitchenAdults">0</b><span>Adults listed</span></div></div></div>
+  <div class="card"><h3>Student Food Allergies</h3><p class="muted">Only documented allergies are listed. The allergy is shown first, followed by the students affected. An absent entry does not establish that someone is allergy-free.</p><div id="kitchenStudents"></div></div>
+  <div class="card"><h3>Adult Food Allergies & Roles</h3><div id="kitchenAdultsList"></div></div>
+  <div class="card"><h3>Kitchen Volunteers</h3><p class="muted">All volunteers remain available here for scheduling, including those without food allergies. These controls update only Kitchen serving assignments for the selected week.</p><div id="kitchenVolunteers"></div><div id="kitchenMessage" class="message hidden"></div></div>
 </section>
 </main>
 
@@ -208,6 +300,18 @@ table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px s
   </div>
 </div>
 
+<div id="v14TeacherModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="v14TeacherTitle">
+<div class="modal-card"><h2 id="v14TeacherTitle">Edit Teacher</h2><form id="v14TeacherEditForm">
+<input type="hidden" id="v14TeacherId"><label>First name<input id="v14TeacherFirst" required></label><label>Last name<input id="v14TeacherLast" required></label>
+<label>Assigned class<select id="v14TeacherGroup"></select></label><label>Role<select id="v14TeacherRole"><option>Main Classroom Teacher</option><option>Classroom Helper</option></select></label><label>Food allergies (optional)<textarea id="v14TeacherAllergies" rows="2"></textarea></label>
+<div class="modal-actions"><button type="button" data-close-v14="v14TeacherModal">Cancel</button><button class="primary" type="submit">Save Teacher</button></div></form></div></div>
+<div id="v14VolunteerModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="v14VolunteerTitle"><div class="modal-card"><h2 id="v14VolunteerTitle">Edit Volunteer</h2><form id="v14VolunteerEditForm"><input type="hidden" id="v14VolunteerId"><label>First name<input id="v14VolunteerFirst" required></label><label>Last name<input id="v14VolunteerLast" required></label><label>Food allergies (optional)<textarea id="v14VolunteerAllergies" rows="2"></textarea></label><div class="modal-actions sticky-modal-actions"><button type="button" data-close-v14="v14VolunteerModal">Cancel</button><button class="primary" type="submit">Save Volunteer</button></div></form></div></div>
+<div id="v14AdultMergeModal" class="modal-backdrop hidden" role="dialog" aria-modal="true"><div class="modal-card"><h2 id="adultMergeTitle">Merge Adult Records</h2><p class="muted">Choose the record to keep. Weekly attendance and serving history from both records will be consolidated.</p><input type="hidden" id="adultMergeType"><input type="hidden" id="adultMergePrimary"><label>Duplicate record<select id="adultMergeOther"></select></label><label>Keep this record<select id="adultMergeSurvivor"></select></label><label>First name<input id="adultMergeFirst"></label><label>Last name<input id="adultMergeLast"></label><label>Food allergies<textarea id="adultMergeAllergies" rows="2"></textarea></label><div id="adultMergeTeacherFields"><label>Class<select id="adultMergeGroup"></select></label><label>Role<select id="adultMergeRole"><option>Main Classroom Teacher</option><option>Classroom Helper</option></select></label></div><div id="adultMergeMessage" class="message hidden"></div><div class="modal-actions sticky-modal-actions"><button type="button" data-close-v14="v14AdultMergeModal">Cancel</button><button type="button" class="primary" id="adultMergeSubmit">Merge Records</button></div></div></div>
+<div id="v14RosterModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="v14RosterTitle">
+<div class="modal-card"><h2 id="v14RosterTitle">Edit Roster Student</h2><p class="muted">Registration and permissions are managed by Admin. Attendance history will not be changed.</p><form id="v14RosterEditForm">
+<input type="hidden" id="v14RosterId"><label>First name<input id="v14RosterFirst" required></label><label>Last name<input id="v14RosterLast" required></label>
+<label>Grade<select id="v14RosterGrade"></select></label><label>Food allergies<textarea id="v14RosterAllergies" rows="2"></textarea></label>
+<div class="modal-actions"><button type="button" data-close-v14="v14RosterModal">Cancel</button><button class="primary" type="submit">Save Student</button></div></form></div></div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="app.js"></script>
 </body>
